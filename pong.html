@@ -1,20 +1,99 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
 <script>
+    let puck;
+    let rekt1;
+    let rekt2;
+    let x = 1;
+    let y = 2;
 
-
-    let x= 100
-    let y=200
-
-    function setup (){
-        createCanvas(600,600)
+    function setup() {
+        createCanvas(400, 400);
+        puck = new ball();
+        rekt1 = new paddle();
+        rekt2 = new paddle2();
     }
 
-    function draw (){
-        background(160)
-        rect(10,160,10,50)
-        rect(380,160,10,50)
-        line(200,0,200,400)
-        circle(x,y,50)
+    function draw() {
+        background(0);
+        rekt1.display();
+        rekt2.display();
+        puck.display();
+        puck.move();
     }
 
+    class ball {
+        constructor() {
+            this.x = width / 2;
+            this.y = height / 2;
+            this.speedx = 3;
+            this.speedy = 1;
+        }
+
+        move() {
+            this.x = this.x + this.speedx;
+            this.y = this.y + this.speedy;
+        }
+
+        display() {
+            fill(255);
+            ellipse(this.x, this.y, 24, 24);
+
+            if (this.y < 0 || this.y > height) {
+                this.speedy *= -1;
+            }
+
+            if (this.x > width) {
+                this.reset();
+            }
+
+            if (this.x < 0) {
+                this.reset();
+            }
+        }
+
+        this;
+        reset = function () {
+            this.x = width / 2;
+            this.y = height / 2;
+        };
+    }
+
+    class paddle {
+        constructor() {
+            this.x = 0;
+            this.y = height / 2;
+            this.w = 10;
+            this.h = 50;
+            this.a = 1;
+        }
+
+        display() {
+            fill(255);
+            rectMode(CENTER);
+            rect(this.x, this.y, this.w, this.h);
+        }
+
+        move() {}
+    }
+
+    class paddle2 {
+        constructor() {
+            this.x = 400;
+            this.y = height / 2;
+            this.w = 10;
+            this.h = 50;
+        }
+
+        display() {
+            fill(255);
+            rectMode(CENTER);
+            rect(this.x, this.y, this.w, this.h);
+        }
+    }
+
+    function keyPressed() {
+        if (key == "a") {
+            this.y = +1;
+        }
+    }
 </script>
