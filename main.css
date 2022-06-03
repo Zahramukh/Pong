@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+    background-color: aliceblue;
+}
+
+#info {
+    width: 200px;
+    height: 400px;
+    background-color: aliceblue;
+    padding: 20px;
+    margin: auto;
+    margin-top: 100px;
+}
+
+a {
+    text-decoration: none;
+    background-color: aliceblue;
+    color: #808080;
+}
+
+a:hover {
+    font-size: larger;
+}
