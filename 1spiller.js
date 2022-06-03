@@ -1,4 +1,4 @@
-let xBall = Math.floor(Math.random() * 300) + 50;
+let xBall = 200;
 let yBall = 50;
 let xSpeed = 2;
 let ySpeed = 7;
@@ -26,6 +26,10 @@ function draw() {
     text("Score: " + score, 10, 25);
 }
 
+function reset() {
+    xBall;
+}
+
 function move() {
     xBall += xSpeed;
     yBall += ySpeed;
@@ -50,5 +54,7 @@ function paddle() {
         xSpeed *= -1;
         ySpeed *= -1;
         score++;
+    } else {
+        reset();
     }
 }
