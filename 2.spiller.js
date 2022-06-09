@@ -1,67 +1,119 @@
-let x = 0;
-let y = 0;
-let score = 0;
-speedX = 5;
-speedY = 4;
+//variabler
+let ballX;
+let ballY;
+let ballBredde = 15;
+let ballHøyde = 15;
+let ballSpeed = 2;
+let ballDirectionX = 1;
+let ballDirectionY = 1;
 
-let a = 160;
-let b = 160;
+let spiller1x = 10;
+let spiller1y = 250;
+
+let spiller2x = 890;
+let spiller2y = 250;
+
+let spillerbredde = 20;
+let spillerhøyde = 100;
+let spillerSpeed = 5;
+
+let poengspiller1 = 0;
+let poengspiller2 = 0;
 
 function setup() {
-    createCanvas(400, 400);
-}
+    createCanvas(900, 500);
 
-function reset() {
-    x = width / 2;
-    y = height / 2;
+    rectMode(CENTER);
+    ballX = width / 2;
+    ballY = height / 2;
+
+    textAlign(CENTER);
 }
 
 function draw() {
-    background(220);
-    rect(10, a, 10, 80);
-    rect(380, b, 10, 80);
-    line(200, 0, 200, 400);
-    ellipse(x, y, 30, 30);
+    pong();
+}
 
-    if (x > width) {
-        reset();
+function pong() {
+    keyTyped();
+    keyPressed();
+
+    background(0);
+    noFill();
+    stroke(255);
+    rect(width / 2, height / 2, width, height);
+    line(450, 0, 450, height);
+
+    fill(255);
+    noStroke();
+
+    rect(ballX, ballY, ballBredde, ballHøyde);
+
+    rect(spiller1x, spiller1y, spillerbredde, spillerhøyde);
+    rect(spiller2x, spiller2y, spillerbredde, spillerhøyde);
+
+    ballX = ballX + ballDirectionX * ballSpeed;
+    ballY = ballY + ballDirectionY * ballSpeed;
+
+    if (ballY >= height) {
+        ballDirectionY *= -1;
     }
 
-    if (x < 0) {
-        reset();
+    if (ballY <= 0) {
+        ballDirectionY *= -1;
     }
 
-    if (y > height) {
-        speedY = -speedY;
+    if (
+        ballX > spiller1x - 10 &&
+        ballX <= spiller1x + 10 &&
+        ballY >= spiller1y - 50 &&
+        ballY <= spiller1y + 50
+    ) {
+        ballDirectionX *= -1;
     }
 
-    if (y < 0) {
-        speedY = -speedY;
+    if (
+        ballX > spiller2x - 10 &&
+        ballX <= spiller2x + 10 &&
+        ballY >= spiller2y - 50 &&
+        ballY <= spiller2y + 50
+    ) {
+        ballDirectionX *= -1;
     }
 
-    x = x + speedX;
-    y = y + speedY;
+    textSize(25);
+    text(poengspiller1, 400, 25);
+    text(poengspiller2, 500, 25);
 
-    if (keyIsDown(LEFT_ARROW)) {
-        a += 5;
+    if (ballX <= 0) {
+        poengspiller2 += 1;
+        ballX = width / 2;
+        ballY = height / 2;
     }
 
-    if (keyIsDown(RIGHT_ARROW)) {
-        a -= 5;
-    }
-
-    if (keyIsDown(65)) {
-        b += 5;
-    }
-
-    if (keyIsDown(83)) {
-        b -= 5;
+    if (ballX >= width) {
+        poengspiller1 += 1;
+        ballX = width / 2;
+        ballY = width / 2;
     }
 }
 
-function paddle() {
-    if (y > b && y < b + 80) {
-        speedX *= -speedX;
-        speedY *= -SpeedY;
+function keyTyped() {
+    if (key == "w" && keyIsPressed) {
+        spiller1y -= spillerSpeed;
+    }
+
+    if (key == "s" && keyIsPressed) {
+        spiller1y += spillerSpeed;
+    }
+}
+
+function keyPressed() {
+    if (keyCode == LEFT_ARROW && keyIsPressed) {
+        spiller2y -= spillerSpeed;
+    }
+
+    if (keyCode == RIGHT_ARROW && keyIsPressed) {
+        spiller2y += spillerSpeed;
     }
 }
